@@ -1,0 +1,28 @@
+[package]
+name = "asc_timetables_patcher"
+version = "0.1.0"
+edition = "2024"
+default-run = "asc_timetables_patcher"
+
+[lib]
+path = "src/_0xd985ab0b.rs"
+
+[[bin]]
+name = "asc_timetables_patcher"
+path = "src/_0x3b4e315a.rs"
+
+[[bin]]
+name = "manifest_dumper"
+path = "src/_0x77bd24bc.rs"
+
+[dependencies]
+goblin = "0.10.7"
+iced-x86 = { version = "1.21.0", default-features = false, features = ["std", "decoder"] }
+log = "0.4.34"
+serde = {version = "1.0.229", features = ["derive"]}
+serde_json = "1.0.151"
+sha2 = "0.11.0"
+winreg = "0.56.0"
+
+[target.x86_64-pc-windows-gnu]
+linker = "x86_64-w64-mingw32-gcc"

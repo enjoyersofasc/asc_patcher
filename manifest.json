@@ -1,0 +1,225 @@
+{
+  "source_sha256": "a1675f31f4eeed33e8696168efa76f4065591c91882be92d7d4be9ce89844fd2",
+  "image_base": "0x400000",
+  "patches": [
+    {
+      "name": "license_profile_accept",
+      "va": 6039909,
+      "original": "8a 45 f3",
+      "modified": "b0 01 90",
+      "reason": "Keep profile/object outputs intact and accept the preliminary registration gate.",
+      "rva": "0x1c2965",
+      "file_offset": "0x1c1d65",
+      "section": ".text"
+    },
+    {
+      "name": "license_format_failure_bridge",
+      "va": 6033433,
+      "original": "0f 84 d0 06 00 00",
+      "modified": "90 90 90 90 90 90",
+      "reason": "Do not exit the validator on an absent local registration string; continue through normal cleanup/state logic.",
+      "rva": "0x1c1019",
+      "file_offset": "0x1c0419",
+      "section": ".text"
+    },
+    {
+      "name": "capability_marker_accept",
+      "va": 6036512,
+      "original": "8b 15 8c",
+      "modified": "b0 01 c3",
+      "reason": "Accept capability marker queries without dereferencing the marker container.",
+      "rva": "0x1c1c20",
+      "file_offset": "0x1c1020",
+      "section": ".text"
+    },
+    {
+      "name": "http_transport_offline",
+      "va": 5347760,
+      "original": "55 8b ec",
+      "modified": "31 c0 c3",
+      "reason": "Return transport failure before WinINet calls so the offline copy does not open HTTP.",
+      "rva": "0x1199b0",
+      "file_offset": "0x118db0",
+      "section": ".text"
+    },
+    {
+      "name": "tip_of_day_offline",
+      "va": 7026896,
+      "original": "55 8b ec",
+      "modified": "31 c0 c3",
+      "reason": "Return transport failure before the startup WinINet tip-of-day fetch; this function has a normal failure return.",
+      "rva": "0x2b38d0",
+      "file_offset": "0x2b2cd0",
+      "section": ".text"
+    },
+    {
+      "name": "license_fallback_flag_startup",
+      "va": 6889168,
+      "original": "c7 05 28 8d ed 00 00 00 00 00",
+      "modified": "c7 05 28 8d ed 00 01 00 00 00",
+      "reason": "Keep cleanup and fallback state machine intact while setting the observed capability flag after a failed registration parse.",
+      "rva": "0x291ed0",
+      "file_offset": "0x2912d0",
+      "section": ".text"
+    },
+    {
+      "name": "license_fallback_flag_document",
+      "va": 6785418,
+      "original": "c7 05 28 8d ed 00 00 00 00 00",
+      "modified": "c7 05 28 8d ed 00 01 00 00 00",
+      "reason": "Preserve the document-open fallback path while setting the capability flag used by local XML export gating.",
+      "rva": "0x27898a",
+      "file_offset": "0x277d8a",
+      "section": ".text"
+    },
+    {
+      "name": "legacy_license_spoof",
+      "va": 6770128,
+      "original": "55 8b ec 6a ff 68 5e 3d c0 00 64 a1 00 00 00 00",
+      "modified": "c7 05 28 8d ed 00 01 00 00 00 b8 01 00 00 00 c3",
+      "reason": "Return the local registration fallback success value and capability flag without accessing absent local registration records; x86 fastcall arguments are register-based.",
+      "rva": "0x274dd0",
+      "file_offset": "0x2741d0",
+      "section": ".text"
+    },
+    {
+      "name": "init_allow_local_spoof",
+      "va": 6889185,
+      "original": "74",
+      "modified": "eb",
+      "reason": "Route startup through the local registration fallback even when the locale-specific profile flag is set.",
+      "rva": "0x291ee1",
+      "file_offset": "0x2912e1",
+      "section": ".text"
+    },
+    {
+      "name": "document_allow_local_spoof",
+      "va": 6785435,
+      "original": "74",
+      "modified": "eb",
+      "reason": "Route document-open registration check through the local fallback for consistent registration state.",
+      "rva": "0x27899b",
+      "file_offset": "0x277d9b",
+      "section": ".text"
+    },
+    {
+      "name": "ui_license_query_allow_local_spoof",
+      "va": 5529169,
+      "original": "0f 84",
+      "modified": "90 e9",
+      "reason": "Route the locale-dependent UI license query to the existing local fallback; runtime comparison showed the old query returned 0 and cleared capability, while this branch returns 1 and preserves capability.",
+      "rva": "0x145e51",
+      "file_offset": "0x145251",
+      "section": ".text"
+    },
+    {
+      "name": "license_hash_accept_syntactic_code",
+      "va": 6034849,
+      "original": "74",
+      "modified": "eb",
+      "reason": "Route a structurally valid 2027 code through the validator's existing success/cleanup path, including derived license state writes; verified by in-app registration dialog and About UI.",
+      "rva": "0x1c15a1",
+      "file_offset": "0x1c09a1",
+      "section": ".text"
+    }
+  ],
+  "runtime_dependency": {
+    "path": "C:\\Users\\xvalegendary\\Desktop\\crackme\\2027\\offline\\lang.asc",
+    "sha256": "6af038af3a9b52b75b378081e21318b0448f2d95b2bfdb92c4cae2e2e7d451d6"
+  },
+  "created_utc": "2026-10-05T16:20:31.064128+00:00",
+  "pre_startup_sha256": "dd31b765df82c29383c8e041702f4ad194b5aa3540dfd60576d68ded54ff78fb",
+  "startup_message": {
+    "message": "fcked up by xvalegendary",
+    "caption": "aSc Timetables 2027",
+    "base_sha256": "dd31b765df82c29383c8e041702f4ad194b5aa3540dfd60576d68ded54ff78fb",
+    "old_entry_rva": "0x5ceb31",
+    "new_entry_rva": "0x12c3000",
+    "iat_rva": "0x85c860",
+    "section": ".msgbox",
+    "section_header_offset": "0x2e0",
+    "raw_offset": "0x1289000",
+    "raw_size": 512,
+    "virtual_size": 154,
+    "code_hex": "9c 60 e8 00 00 00 00 5b 81 eb 07 30 2c 01 6a 40 8d 83 72 30 2c 01 50 8d 83 40 30 2c 01 50 6a 00 ff 93 60 c8 85 00 61 9d e9 04 bb 30 ff",
+    "payload_hex": "9c 60 e8 00 00 00 00 5b 81 eb 07 30 2c 01 6a 40 8d 83 72 30 2c 01 50 8d 83 40 30 2c 01 50 6a 00 ff 93 60 c8 85 00 61 9d e9 04 bb 30 ff 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 66 00 63 00 6b 00 65 00 64 00 20 00 75 00 70 00 20 00 62 00 79 00 20 00 78 00 76 00 61 00 6c 00 65 00 67 00 65 00 6e 00 64 00 61 00 72 00 79 00 00 00 61 00 53 00 63 00 20 00 54 00 69 00 6d 00 65 00 74 00 61 00 62 00 6c 00 65 00 73 00 20 00 32 00 30 00 32 00 37 00 00 00",
+    "position_independent": true,
+    "disassembly": [
+      {
+        "va": "0x16c3000",
+        "bytes": "9c",
+        "instruction": "pushfd "
+      },
+      {
+        "va": "0x16c3001",
+        "bytes": "60",
+        "instruction": "pushal "
+      },
+      {
+        "va": "0x16c3002",
+        "bytes": "e8 00 00 00 00",
+        "instruction": "call 0x16c3007"
+      },
+      {
+        "va": "0x16c3007",
+        "bytes": "5b",
+        "instruction": "pop ebx"
+      },
+      {
+        "va": "0x16c3008",
+        "bytes": "81 eb 07 30 2c 01",
+        "instruction": "sub ebx, 0x12c3007"
+      },
+      {
+        "va": "0x16c300e",
+        "bytes": "6a 40",
+        "instruction": "push 0x40"
+      },
+      {
+        "va": "0x16c3010",
+        "bytes": "8d 83 72 30 2c 01",
+        "instruction": "lea eax, [ebx + 0x12c3072]"
+      },
+      {
+        "va": "0x16c3016",
+        "bytes": "50",
+        "instruction": "push eax"
+      },
+      {
+        "va": "0x16c3017",
+        "bytes": "8d 83 40 30 2c 01",
+        "instruction": "lea eax, [ebx + 0x12c3040]"
+      },
+      {
+        "va": "0x16c301d",
+        "bytes": "50",
+        "instruction": "push eax"
+      },
+      {
+        "va": "0x16c301e",
+        "bytes": "6a 00",
+        "instruction": "push 0"
+      },
+      {
+        "va": "0x16c3020",
+        "bytes": "ff 93 60 c8 85 00",
+        "instruction": "call dword ptr [ebx + 0x85c860]"
+      },
+      {
+        "va": "0x16c3026",
+        "bytes": "61",
+        "instruction": "popal "
+      },
+      {
+        "va": "0x16c3027",
+        "bytes": "9d",
+        "instruction": "popfd "
+      },
+      {
+        "va": "0x16c3028",
+        "bytes": "e9 04 bb 30 ff",
+        "instruction": "jmp 0x9ceb31"
+      }
+    ]
+  }
+}
